@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="UnicornView">
+        <attr name="walkSprite" format="reference" />
+        <attr name="walkSteps" format="integer" />
+        <attr name="walkInterval" format="integer" />
+        <attr name="staringSprite" format="reference" />
+        <attr name="staringInterval" format="integer" />
+        <attr name="dieClicks" format="integer" />
+        <attr name="dieSprite" format="reference" />
+        <attr name="dieInterval" format="integer" />
+        <attr name="showAnimation" format="reference" />
+        <attr name="hideAnimation" format="reference" />
+    </declare-styleable>
+
+    <style name="UnicornView">
+        <item name="walkSprite">@array/walkSprite</item>
+        <item name="walkSteps">40</item>
+        <item name="walkInterval">200</item>
+        <item name="staringSprite">@array/staringSprite</item>
+        <item name="staringInterval">1200</item>
+        <item name="dieClicks">5</item>
+        <item name="dieSprite">@array/dieSprite</item>
+        <item name="dieInterval">200</item>
+        <item name="showAnimation">@null</item>
+        <item name="hideAnimation">@anim/long_slide_down_fade_out</item>
+    </style>
+
+    <array name="walkSprite">
+        <item>@drawable/unicorn1</item>
+        <item>@drawable/unicorn2</item>
+    </array>
+
+    <array name="staringSprite">
+        <item>@drawable/unicorn3</item>
+    </array>
+
+    <array name="dieSprite">
+        <item>@drawable/unicorn4</item>
+        <item>@drawable/unicorn5</item>
+        <item>@drawable/unicorn6</item>
+        <item>@drawable/unicorn5</item>
+        <item>@drawable/unicorn6</item>
+        <item>@drawable/unicorn7</item>
+    </array>
+
+</resources>
