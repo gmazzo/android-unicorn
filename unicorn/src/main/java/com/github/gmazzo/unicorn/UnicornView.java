@@ -20,6 +20,7 @@ import com.github.gmazzo.ResourceUtils;
 
 public class UnicornView extends View implements Runnable, View.OnClickListener {
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private boolean autoStart;
     private Drawable walkSprite[];
     private int walkSteps;
     private long walkInterval;
@@ -63,6 +64,7 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.UnicornView, defStyleAttr, defStyleRes);
             try {
+                setAutoStart(ta.getBoolean(R.styleable.UnicornView_autoStart, true));
                 setWalkSprite(ta.getResourceId(R.styleable.UnicornView_walkSprite, 0));
                 setWalkSteps(ta.getInt(R.styleable.UnicornView_walkSteps, 0));
                 setWalkInterval(ta.getInt(R.styleable.UnicornView_walkInterval, 0));
@@ -197,7 +199,7 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (getVisibility() == VISIBLE) {
+        if (isAutoStart() && getVisibility() == VISIBLE) {
             start();
         }
     }
@@ -242,6 +244,14 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
     public boolean isDead() {
         int max = getDieClicks();
         return max > 0 && getClickCount() >= max;
+    }
+
+    public boolean isAutoStart() {
+        return autoStart;
+    }
+
+    public void setAutoStart(boolean autoStart) {
+        this.autoStart = autoStart;
     }
 
     public Drawable[] getWalkSprite() {

@@ -2,19 +2,32 @@
 <resources>
 
     <declare-styleable name="UnicornView">
+        <!-- Set to <code>true</code> if should start animating once it gets visible -->
+        <attr name="autoStart" format="boolean" />
+        <!-- The sprite (array of <code>Drawable</code>) for <i>walking</i> state -->
         <attr name="walkSprite" format="reference" />
+        <!-- The number of steps to cover the view's width -->
         <attr name="walkSteps" format="integer" />
+        <!-- The interval (in milliseconds) between each image of the sprite (steps) -->
         <attr name="walkInterval" format="integer" />
+        <!-- The sprite (array of <code>Drawable</code>) for <i>staring</i> state -->
         <attr name="staringSprite" format="reference" />
+        <!-- The interval (in milliseconds) between each image of the sprite -->
         <attr name="staringInterval" format="integer" />
+        <!-- The number of hits on the view to trigger the die state -->
         <attr name="dieClicks" format="integer" />
+        <!-- The sprite (array of <code>Drawable</code>) for <i>die</i> state -->
         <attr name="dieSprite" format="reference" />
+        <!-- The interval (in milliseconds) between each image of the sprite -->
         <attr name="dieInterval" format="integer" />
+        <!-- The animation to show when the view becomes visible (may be <code>null</code>) -->
         <attr name="showAnimation" format="reference" />
+        <!-- The animation to show when the view becomes invisible (may be <code>null</code>) -->
         <attr name="hideAnimation" format="reference" />
     </declare-styleable>
 
     <style name="UnicornView">
+        <item name="autoStart">true</item>
         <item name="walkSprite">@array/walkSprite</item>
         <item name="walkSteps">40</item>
         <item name="walkInterval">200</item>
