@@ -13,6 +13,11 @@ On your `build.gradle` add:
     }
 ```
 
+## Screenshots
+![Screenshot #1](screenshots/screenshot1.png)
+![Screenshot #2](screenshots/screenshot2.png)
+![Screenshot #3](screenshots/screenshot3.png)
+
 ## Usage
 ```xml
     <com.github.gmazzo.unicorn.UnicornView
@@ -65,8 +70,3 @@ and change your `layout` as:
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 ```
-
-## Screenshots
-![Screenshot #1](screenshots/screenshot1.png)
-![Screenshot #2](screenshots/screenshot2.png)
-![Screenshot #3](screenshots/screenshot3.png)
