@@ -1,1 +1,1 @@
-include ':unicorn'
+include ':unicorn', ':sample'
