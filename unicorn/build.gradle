@@ -27,7 +27,7 @@ bintray {
         name = 'android-unicorn'
         desc = repoDesc
         vcsUrl = "${repoUrl}.git"
-        licenses = ['MIT']
+        licenses = ['Public Domain']
         labels = ['aar', 'android', 'unicorn']
         publicDownloadNumbers = true
     }
