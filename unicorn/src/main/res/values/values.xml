@@ -6,8 +6,8 @@
         <attr name="autoStart" format="boolean" />
         <!-- The sprite (array of <code>Drawable</code>) for <i>walking</i> state -->
         <attr name="walkSprite" format="reference" />
-        <!-- The number of steps to cover the view's width -->
-        <attr name="walkSteps" format="integer" />
+        <!-- The step size percentage over the view's width -->
+        <attr name="walkStepPercent" format="fraction" />
         <!-- The interval (in milliseconds) between each image of the sprite (steps) -->
         <attr name="walkInterval" format="integer" />
         <!-- The sprite (array of <code>Drawable</code>) for <i>staring</i> state -->
@@ -29,10 +29,10 @@
     <style name="UnicornView">
         <item name="autoStart">true</item>
         <item name="walkSprite">@array/walkSprite</item>
-        <item name="walkSteps">40</item>
-        <item name="walkInterval">200</item>
+        <item name="walkStepPercent">10%</item>
+        <item name="walkInterval">600</item>
         <item name="staringSprite">@array/staringSprite</item>
-        <item name="staringInterval">1200</item>
+        <item name="staringInterval">2000</item>
         <item name="dieClicks">5</item>
         <item name="dieSprite">@array/dieSprite</item>
         <item name="dieInterval">200</item>

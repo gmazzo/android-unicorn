@@ -11,8 +11,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.AnimRes;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.FractionRes;
 import android.support.annotation.IntRange;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
 
@@ -22,7 +24,7 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean autoStart;
     private Drawable walkSprite[];
-    private int walkSteps;
+    private TypedValue walkStepPercent;
     private long walkInterval;
     private Drawable staringSprite[];
     private long staringInterval;
@@ -66,7 +68,7 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
             try {
                 setAutoStart(ta.getBoolean(R.styleable.UnicornView_autoStart, true));
                 setWalkSprite(ta.getResourceId(R.styleable.UnicornView_walkSprite, 0));
-                setWalkSteps(ta.getInt(R.styleable.UnicornView_walkSteps, 0));
+                ta.getValue(R.styleable.UnicornView_walkStepPercent, walkStepPercent = new TypedValue());
                 setWalkInterval(ta.getInt(R.styleable.UnicornView_walkInterval, 0));
                 setStaringSprite(ta.getResourceId(R.styleable.UnicornView_staringSprite, 0));
                 setStaringInterval(ta.getInt(R.styleable.UnicornView_staringInterval, 0));
@@ -81,20 +83,8 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
             }
         }
 
-        computeSpriteSize();
         setClickable(true);
         setOnClickListener(this);
-    }
-
-    private void computeSpriteSize() {
-        int size[] = {0, 0};
-
-        computeSpriteSize(size, walkSprite);
-        computeSpriteSize(size, staringSprite);
-        computeSpriteSize(size, dieSprite);
-
-        setMinimumWidth(size[0]);
-        setMinimumHeight(size[1]);
     }
 
     private void computeSpriteSize(int size[], Drawable drawables[]) {
@@ -104,6 +94,19 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
                 size[1] = Math.max(size[1], drawable.getIntrinsicHeight());
             }
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int size[] = {0, 0};
+        computeSpriteSize(size, walkSprite);
+        computeSpriteSize(size, staringSprite);
+        computeSpriteSize(size, dieSprite);
+
+        int width = resolveSize(Math.max(size[0], getSuggestedMinimumWidth()), widthMeasureSpec);
+        int height = resolveSize(Math.max(size[1], getSuggestedMinimumHeight()), heightMeasureSpec);
+
+        setMeasuredDimension(width, height);
     }
 
     private void reset() {
@@ -137,8 +140,9 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
             switch (state) {
                 case STARING:
                     state = State.WALKING;
-                    sprite = state.getSprite(this);
-                    break;
+                    handler.postDelayed(this, state.getInterval(this));
+                    invalidate();
+                    return;
 
                 case DYING:
                     stop();
@@ -155,17 +159,18 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
 
         step = (step + 1) % sprite.length;
         int imgWidth = sprite[step].getBounds().width();
-        int width = getWidth() - imgWidth;
-        float stepWidth = width / walkSteps;
+        int parentWidth = getWidth();
+        int walkWidth = parentWidth - imgWidth;
+        float stepWidth = walkStepPercent.getFraction(imgWidth, walkWidth);
         float transX = getTranslationX();
         boolean backward = getScaleX() < 0;
 
         if (state == State.WALKING) {
-            if (transX < -width) {
+            if (transX < -walkWidth) {
                 transX = 0;
                 setScaleX(-1);
 
-            } else if (transX > width) {
+            } else if (transX > walkWidth) {
                 transX = 0;
                 setScaleX(1);
             }
@@ -174,7 +179,6 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
         }
 
         invalidate();
-
         handler.postDelayed(this, state.getInterval(this));
     }
 
@@ -188,6 +192,13 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
         Drawable drawable = state.getSprite(this)[Math.max(step, 0)];
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();
+        float factorX = width / (float) viewWidth;
+        float factorY = height / (float) viewHeight;
+        float factor = Math.max(factorX, factorY);
+        if (factor > 1) {
+            width /= factor;
+            height /= factor;
+        }
         int left = viewWidth - width;
         int top = viewHeight - height;
 
@@ -270,16 +281,19 @@ public class UnicornView extends View implements Runnable, View.OnClickListener 
         setWalkSprite(getDrawableArray(arrayRes));
     }
 
-    public int getWalkSteps() {
-        return walkSteps;
+    public TypedValue getWalkStepPercent() {
+        return walkStepPercent;
     }
 
-    public void setWalkSteps(@IntRange(from = 1) int walkSteps) {
-        if (walkSteps < 0) {
-            throw new IllegalArgumentException("walkSteps must be >= 0");
-        }
+    public void setWalkStepPercent(TypedValue walkStepPercent) {
+        this.walkStepPercent = walkStepPercent;
+    }
 
-        this.walkSteps = walkSteps;
+    public void setWalkStepPercent(@FractionRes int fractionRes) {
+        if (walkStepPercent == null) {
+            walkStepPercent = new TypedValue();
+        }
+        getResources().getValue(fractionRes, walkStepPercent, true);
     }
 
     public long getWalkInterval() {

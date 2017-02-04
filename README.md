@@ -29,7 +29,7 @@ On your `build.gradle` add:
 | Attribute | Type | Description | Default value |
 | --- | --- | --- | --- |
 | `walkSprite` | array (of `Drawable`) | The sprite for *walking* state | `@array/walkSprite`
-| `walkSteps` | integer | The number of steps to cover the view's width. A higher number will render a smoother animation | `40`
+| `walkStepPercent` | fraction | The step size percentage over the view's width. A lower number will render a smoother animation | `40`
 | `walkInterval` | integer | The interval (in milliseconds) between each image of the sprite (steps) | `200`
 | `staringSprite` | array of `Drawable` | The sprite for *staring* state | `@array/staringSprite`
 | `staringInterval` | integer | The interval (in milliseconds) between each image of the sprite | `1200`
