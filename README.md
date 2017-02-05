@@ -9,7 +9,7 @@ On your `build.gradle` add:
     }
 
     dependencies {
-        compile 'com.github.gmazzo:unicorn:0.2'
+        compile 'com.github.gmazzo:unicorn:0.3'
     }
 ```
 

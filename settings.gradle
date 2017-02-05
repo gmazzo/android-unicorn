@@ -1,1 +1,3 @@
-include ':unicorn', ':sample'
+include ':library', ':sample'
+
+project(':library').name = 'unicorn'
