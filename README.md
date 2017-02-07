@@ -4,10 +4,6 @@ A funny Unicorn widget to include in your layouts as a gadget
 ## Import
 On your `build.gradle` add:
 ```
-    repositories {
-        maven { url "https://dl.bintray.com/gmazzo/maven/" }
-    }
-
     dependencies {
         compile 'com.github.gmazzo:unicorn:0.3'
     }
