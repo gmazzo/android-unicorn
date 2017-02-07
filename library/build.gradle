@@ -15,7 +15,7 @@ android {
 }
 
 def repoDesc = 'A funny Unicorn widget to include in your layouts as a gadget'
-def repoUrl = 'https://github.com/gmazzo/android-unicorn.git'
+def repoUrl = 'https://github.com/gmazzo/android-unicorn'
 
 bintray {
     user = System.getenv('BINTRAY_USER')
@@ -27,6 +27,8 @@ bintray {
         name = 'android-unicorn'
         desc = repoDesc
         vcsUrl = "${repoUrl}.git"
+        githubRepo = repoUrl.replaceFirst('\\Qhttps://github.com/\\E', '');
+        githubReleaseNotesFile = 'README.md'
         licenses = ['Public Domain']
         labels = ['aar', 'android', 'unicorn']
         publicDownloadNumbers = true
