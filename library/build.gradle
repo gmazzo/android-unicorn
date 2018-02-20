@@ -3,16 +3,18 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "$version"
     }
 }
+
+archivesBaseName = 'unicorn'
 
 def repoDesc = 'A funny Unicorn widget to include in your layouts as a gadget'
 def repoName = 'android-unicorn'
